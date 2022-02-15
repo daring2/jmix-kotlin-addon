@@ -2,7 +2,6 @@
 <menu-config xmlns="http://jmix.io/schema/ui/menu">
 
     <menu id="tmp" caption="msg://com.company.jmix_kotlin_addon/menu.addon" insertAfter="administration">
-        <item screen="tmp_Foo.browse" caption="msg://com.company.jmix_kotlin_addon.screen.foo/FooBrowse.caption"/>
     </menu>
 
 </menu-config>
