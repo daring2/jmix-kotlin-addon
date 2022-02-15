@@ -1,25 +1,22 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath "io.jmix.gradle:jmix-gradle-plugin:1.1.4"
-    }
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10' apply false
+    id 'io.jmix' version '1.1.4' apply false
+    id 'org.sonarqube' version "3.3"
 }
 
 group = 'com.company'
-version = '0.0.1-SNAPSHOT'
+version = '0.1'
 
 subprojects {
-    apply plugin: 'java-library'
-    apply plugin: 'maven-publish'
     apply plugin: 'io.jmix'
+    apply plugin: 'java-library'
+    apply plugin: 'kotlin'
+    apply plugin: 'maven-publish'
 
     repositories {
+        mavenLocal()
         mavenCentral()
-                maven {
-        url 'https://global.repo.jmix.io/repository/public'
-    }
+        maven { url 'https://global.repo.jmix.io/repository/public' }
     }
 
     jmix {
@@ -27,36 +24,22 @@ subprojects {
         projectId = 'tmp'
     }
 
-    group = this.group
-    version = this.version
+    group = rootProject.group
+    version = rootProject.version
 
-    def props = new Properties()
-    buildFile.withInputStream { props.load(it) }
-    def subArchivesBaseName = props.getProperty('archivesBaseName')
-    def archName = subArchivesBaseName.substring(1, subArchivesBaseName.length() - 1)
+//    sourceCompatibility = JavaVersion.VERSION_17
+//    targetCompatibility = JavaVersion.VERSION_17
+//    compileKotlin { kotlinOptions.jvmTarget = "17" }
+//    compileTestKotlin { kotlinOptions.jvmTarget = "17" }
 
     java {
         withSourcesJar()
     }
 
-    artifacts {
-        archives sourcesJar
-    }
 
     publishing {
-        repositories {
-            maven {
-                url = 'https://myrepo/releases/'
-                credentials {
-                    username rootProject.hasProperty('uploadUser') ? rootProject['uploadUser'] : 'admin'
-                    password rootProject.hasProperty('uploadPassword') ? rootProject['uploadPassword'] : 'admin'
-                }
-                allowInsecureProtocol = true
-            }
-        }
         publications {
-            javaMaven(MavenPublication) {
-                artifactId = archName
+            maven(MavenPublication) {
                 from components.java
             }
         }

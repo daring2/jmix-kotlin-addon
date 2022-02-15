@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.company.jmix_kotlin_addon.autoconfigure
 
-package com.company.jmix_kotlin_addon.autoconfigure;
-
-import com.company.jmix_kotlin_addon.TmpConfiguration;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import com.company.jmix_kotlin_addon.TmpConfiguration
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 
 @Configuration
-@Import({TmpConfiguration.class})
-public class TmpAutoConfiguration {
-}
-
+@Import(TmpConfiguration::class)
+open class TmpAutoConfiguration
